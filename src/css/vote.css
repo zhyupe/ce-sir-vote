@@ -1,0 +1,11 @@
+body, input, button { font-family: "Century Gothic","Segoe UI","Microsoft Yahei","SimHei","SimKai",sans-seris; }
+md-tabs {
+  border: 1px solid #e1e1e1; }
+md-tabs md-tab-content {
+  background: #fafafa; }
+md-tabs md-tabs-wrapper {
+  background: white; }
+md-tabs {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+md-tab[disabled] {
+  opacity: 0.5; }

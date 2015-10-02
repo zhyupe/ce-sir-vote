@@ -1,0 +1,6 @@
+<section layout="row">
+    <md-button class="md-raised" flex style="background:#4CAF50;color:#fff" ng-href="#/active">{{activeCount}} 进行中的投票</md-button>
+    <md-button class="md-raised" flex style="background:#FF9800;color:#fff" ng-href="#/finished">{{finishedCount}} 已完成的投票</md-button>
+</section>
+<md-button class="md-raised md-primary" ng-href="#/new">新投票</md-button>
+<md-button class="md-raised md-warn" ng-click="clearVote()">清空投票</md-button>

@@ -1,0 +1,43 @@
+<form name="newVote" layout="column" ng-submit="formSubmit()">
+    <div layout layout-sm="column">
+        <md-input-container flex="66" flex-sm="100">
+            <label>投票名称</label>
+            <input name="name" required ng-model="vote.name">
+            <div ng-messages="newVote.name.$error">
+                <div ng-message="required">此项目为必填项</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container flex>
+            <label>投票人数</label>
+            <input name="count" required type="number" ng-model="vote.count" min="1">
+            <div ng-messages="newVote.count.$error">
+                <div ng-message="min">投票要有人参加</div>
+                <div ng-message="required">此项目为必填项</div>
+            </div>
+        </md-input-container>
+    </div>
+    <div layout>
+        <md-input-container flex="50">
+            <label>最多可选数</label>
+                <input name="max" required type="number" ng-model="vote.max" min="1">
+            <div ng-messages="newVote.max.$error">
+                <div ng-message="min">此项目至少为 1</div>
+                <div ng-message="required">此项目为必填项</div>
+            </div>
+        </md-input-container>
+        <md-input-container flex="50">
+            <label>最小可选数</label>
+            <input name="min" required type="number" ng-model="vote.min" min="0">
+            <div ng-messages="newVote.min.$error">
+                <div ng-message="min">此项目至少为 0</div>
+                <div ng-message="required">此项目为必填项</div>
+            </div>
+        </md-input-container>
+    </div>
+    <div style="margin-bottom:24px">
+        <p>选项内容 (已输入 {{vote.options.length}} 个选项)</p>
+        <md-chips ng-model="vote.options" secondary-placeholder="输入选项内容"></md-chips>
+    </div>
+    <md-button type="submit" class="md-raised md-primary">提交</md-button>
+</form>

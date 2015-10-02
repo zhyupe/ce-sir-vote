@@ -1,0 +1,54 @@
+<md-list>
+    <md-list-item class="md-2-line">
+        <div class="md-list-item-text" layout="column">
+            <h3>{{ item.name }}</h3>
+            <p>{{item.max == 1 ? ('单选' + (item.min == 0 ? ' (可弃权)':'')) : ('多选 (可选 '+(item.max == item.min ? '' : item.min+' ~ ')+item.max+' 项)')}} - 投票进度: {{item.list.length}} / {{item.count}}</p>
+            <md-progress-linear md-mode="determinate" value="{{item.list.length / item.count * 100}}"></md-progress-linear>
+        </div>
+    </md-list-item>
+</md-list>
+<div ng-if="!item.finished">
+    <form ng-if="!voteNumber" ng-submit="submit()" layout="column">
+        <md-radio-group ng-if="item.max == 1" ng-model="selected[0]">
+            <md-radio-button ng-value="-1" ng-if="item.min == 0"><i>弃权</i></md-radio-button>
+            <md-radio-button ng-value="$index" ng-repeat="opt in item.options">{{opt}}</md-radio-button>
+        </md-radio-group>
+        <div layout="column">
+            <div flex-gt-sm="50" ng-if="item.max > 1" ng-repeat="opt in item.options">
+                <md-checkbox ng-checked="exists($index)" ng-click="toggle($index)">{{opt}}</md-checkbox>
+            </div>
+        </div>
+        <md-button class="md-raised md-primary" type="submit" flex>提交</md-button>
+    </form>
+    <div ng-if="voteNumber" style="text-align:center" layout="column">
+        <h3>提交成功！</h3>
+        <p>您的投票序号为 {{voteNumber}}<br>投票结束后可在结果中查询您的投票内容</p>
+        <p>请将设备交还工作人员，不要进行其他操作</p>
+        <md-button class="md-raised md-primary" ng-show="!!voteTimeout" ng-click="newVote()">继续投票</md-button>
+    </div>
+</div>
+<div ng-if="item.finished">
+    <md-tabs md-dynamic-height>
+        <md-tab label="票数统计">
+            <md-list>
+                <md-list-item class="md-2-line" ng-repeat="r in item.result | orderBy: '-vote'">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{$index+1}}. {{r.option}}</h3>
+                        <p>票数: {{r.vote}}</p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-tab>
+        <md-tab label="投票详情">
+            <md-list>
+                <md-list-item class="md-2-line" ng-repeat="l in item.list">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>投票序号: {{$index+1}}</h3>
+                        <p ng-if="l.length == 0"><i>弃权</i></p>
+                        <p>选择了: <span style="margin:0 10px" ng-repeat="n in l">{{option(n)}}</span></p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-tab>
+    </md-tabs>
+</div>

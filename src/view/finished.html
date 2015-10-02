@@ -1,0 +1,13 @@
+<md-list ng-if="fetch('finishedCount', 0) > 0">
+    <md-list-item class="md-2-line" ng-repeat="item in fetch('votes', []) | filter: {finished: true}">
+        <div class="md-list-item-text" layout="column">
+            <h3>{{ item.name }}</h3>
+            <p>{{item.max == 1 ? ('单选' + (item.min == 0 ? ' (可弃权)':'')) : ('多选 (可选 '+(item.max == item.min ? '' : item.min+' ~ ')+item.max+' 项)')}} - 投票人数: {{item.count}}</p>
+            <div class="md-actions" layout="row" layout-align="end center">
+                <md-button ng-href="#/vote/{{item.id}}">查看详情</md-button>
+                <md-button class="md-warn" ng-click="removeVote(item.id)">删除</md-button>
+            </div>
+        </div>
+    </md-list-item>
+</md-list>
+<p ng-if="fetch('finishedCount', 0) == 0" style="color:#999">没有已完成的投票</p>
