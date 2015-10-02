@@ -59,15 +59,15 @@ module.exports = function(grunt) {
 
     watch: {
       dev: {
-        files: [ 'Gruntfile.js', 'src/js/*.js', 'src/view/*.html', 'src/css/*.css' ],
-        tasks: [ 'cssmin', 'html2js:dist', 'concat:dist', 'clean:temp' ],
+        files: [ 'Gruntfile.js', 'src/**' ],
+        tasks: [ 'cssmin', 'html2js:dist', 'concat:dist', 'copy:dist', 'clean:temp' ],
         options: {
           atBegin: true
         }
       },
       min: {
-        files: [ 'Gruntfile.js', 'app/*.js', '*.html' ],
-        tasks: [ 'cssmin', 'html2js:dist', 'concat:dist', 'clean:temp', 'uglify:dist' ],
+        files: [ 'Gruntfile.js', 'src/**' ],
+        tasks: [ 'cssmin', 'html2js:dist', 'concat:dist', 'copy:dist', 'clean:temp', 'uglify:dist' ],
         options: {
           atBegin: true
         }
@@ -81,36 +81,41 @@ module.exports = function(grunt) {
       }
     },
 
-    compress: {
+    copy: {
       dist: {
-        options: {
-          archive: '<%= pkg.name %>-<%= pkg.version %>.zip'
-        },
         files: [{
+          expand: true,
+          cwd: 'src/',
           src: [ 'index.html' ],
-          dest: '/'
-        }, {
-          src: [ 'dist/**' ],
           dest: 'dist/'
         }, {
-          src: [ 'assets/**' ],
-          dest: 'assets/'
+          expand: true,
+          cwd: 'assets/',
+          src: [ '**' ],
+          dest: 'dist/assets/'
         }]
       }
+    },
+    'gh-pages': {
+      options: {
+        base: 'dist'
+      },
+      src: ['**']
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-gh-pages');
 
   grunt.registerTask('dev', [ 'connect:server', 'watch:dev' ]);
   grunt.registerTask('minified', [ 'connect:server', 'watch:min' ]);
-  grunt.registerTask('package', [ 'html2js:dist', 'cssmin', 'concat:dist', 'uglify:dist',
-    'clean:temp', 'compress:dist' ]);
+  grunt.registerTask('package', [ 'html2js:dist', 'cssmin', 'concat:dist', 'uglify:dist', 'copy:dist',
+    'clean:temp', 'copy:dist' ]);
 };
