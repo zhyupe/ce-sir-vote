@@ -75,6 +75,7 @@ if (!window.localStorage) {
     $scope.toggleSidenav = function(menuId) {
       $mdSidenav(menuId).toggle();
     };
+    $scope.standalone = !!navigator.standalone;
   }]);
 
   app.controller('IndexCtrl', ['$scope', '$mdDialog', function ($scope, $mdDialog) {
