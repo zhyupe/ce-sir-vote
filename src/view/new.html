@@ -1,6 +1,6 @@
 <form name="newVote" layout="column" ng-submit="formSubmit()">
-    <div layout layout-sm="column">
-        <md-input-container flex="66" flex-sm="100">
+    <div layout-gt-sm="row">
+        <md-input-container flex-gt-sm="66">
             <label>投票名称</label>
             <input name="name" required ng-model="vote.name">
             <div ng-messages="newVote.name.$error">
@@ -8,7 +8,7 @@
             </div>
         </md-input-container>
 
-        <md-input-container flex>
+        <md-input-container flex-gt-sm>
             <label>投票人数</label>
             <input name="count" required type="number" ng-model="vote.count" min="1">
             <div ng-messages="newVote.count.$error">
@@ -17,7 +17,7 @@
             </div>
         </md-input-container>
     </div>
-    <div layout>
+    <div layout="row">
         <md-input-container flex="50">
             <label>最多可选数</label>
                 <input name="max" required type="number" ng-model="vote.max" min="1">
