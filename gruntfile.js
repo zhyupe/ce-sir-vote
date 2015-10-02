@@ -117,5 +117,5 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', [ 'connect:server', 'watch:dev' ]);
   grunt.registerTask('minified', [ 'connect:server', 'watch:min' ]);
   grunt.registerTask('package', [ 'html2js:dist', 'cssmin', 'concat:dist', 'uglify:dist', 'copy:dist',
-    'clean:temp', 'copy:dist' ]);
+    'clean:temp', 'copy:dist', 'gh-pages' ]);
 };
