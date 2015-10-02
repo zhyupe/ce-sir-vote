@@ -57,23 +57,6 @@ module.exports = function(grunt) {
       }
     },
 
-    watch: {
-      dev: {
-        files: [ 'Gruntfile.js', 'src/**' ],
-        tasks: [ 'cssmin', 'html2js:dist', 'concat:dist', 'copy:dist', 'clean:temp' ],
-        options: {
-          atBegin: true
-        }
-      },
-      min: {
-        files: [ 'Gruntfile.js', 'src/**' ],
-        tasks: [ 'cssmin', 'html2js:dist', 'concat:dist', 'copy:dist', 'clean:temp', 'uglify:dist' ],
-        options: {
-          atBegin: true
-        }
-      }
-    },
-
     cssmin: {
       dist: {
         src: ['src/css/*.css'],
@@ -100,22 +83,22 @@ module.exports = function(grunt) {
       options: {
         base: 'dist'
       },
-      src: ['**']
+      dist: {
+        src: ['**']
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-html2js');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-gh-pages');
 
-  grunt.registerTask('dev', [ 'connect:server', 'watch:dev' ]);
-  grunt.registerTask('minified', [ 'connect:server', 'watch:min' ]);
-  grunt.registerTask('package', [ 'html2js:dist', 'cssmin', 'concat:dist', 'uglify:dist', 'copy:dist',
+  grunt.registerTask('dev', [ 'html2js:dist', 'cssmin', 'concat:dist', 'copy:dist',
+    'clean:temp', 'copy:dist']);
+  grunt.registerTask('dist', [ 'html2js:dist', 'cssmin', 'concat:dist', 'uglify:dist', 'copy:dist',
     'clean:temp', 'copy:dist', 'gh-pages' ]);
 };
